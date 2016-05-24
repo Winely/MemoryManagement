@@ -8,24 +8,27 @@ using System.Threading;
 
 namespace RAM
 {
+    enum dir { front, back, mid };
     class RAMManager : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         int missing = 0;
-        bool[] worklist = new bool[320];
-        ProcessList processList = new ProcessList();
+        List<int> worklist = new List<int>();
+        public ProcessList processList = new ProcessList();
         public Memory[] memory = new Memory[4];
         LinkedList<int> FIFOList = new LinkedList<int>();
         LinkedList<int> LRUList = new LinkedList<int>();
         bool random = false;
-        bool front = true;
+        dir direc = dir.front;
         bool isFIFO;
         bool current_miss;
-
+        bool skip = false;
+        int work_index;
+        public MainWindow parent;
         public RAMManager()
         {
             //可能要改
-            for (int i = 0; i < 320; i++) worklist[i] = true;
+            for (int i = 0; i < 320; i++) worklist.Add(i);
             for (int i = 0; i < 4; i++) memory[i] = new Memory();
         }
 
@@ -33,6 +36,16 @@ namespace RAM
         {
             get { return isFIFO; }
             set { isFIFO = value; }
+        }
+        public bool Skip
+        {
+            get { return skip; }
+            set { skip = value;
+                if (this.PropertyChanged != null)
+                {
+                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Skip"));
+                }
+                }
         }
         public Memory[] RAMs
         {
@@ -108,28 +121,38 @@ namespace RAM
             return block;
         }
 
-        int next(int command)
+        int next(int command_index)
         {
-            int n=command;
+            if (processList.Count == 320) return 322;
+            Random ran = new Random();
+            int n=command_index;
             if(random)
             {
-                Random ran = new Random();
-                if(front)   //随机前跳
+                if(direc==dir.front)   //随机前跳
                 {
-                    do { n = ran.Next(0, command); }
-                    while (!worklist[n]);
+                    if (work_index == 0) n = ran.Next(worklist.Count - 1);
+                    else n = ran.Next(0, work_index - 1);
+                    work_index--;
                 }
-                else        //随机后跳
+                else if(direc==dir.back)        //随机后跳
                 {
-                    do { n = ran.Next(command+1,319); }
-                    while (!worklist[n]);
+                    if (work_index > worklist.Count - 1) n = ran.Next(worklist.Count - 1);
+                    else n = ran.Next(work_index, worklist.Count - 1);
                 }
-                front = !front;
+                else
+                {
+                    n = ran.Next(worklist.Count);
+                }
             }
             else    //顺序执行
             {
-                do { n++; }
-                while (!worklist[n]);
+                if (direc == dir.front) direc = dir.back;
+                else if (direc == dir.mid) 
+                { 
+                    work_index = ran.Next(worklist.Count);
+                    direc = dir.front;
+                }
+                else direc = dir.mid; 
             }
             random = !random;
             return n;
@@ -138,32 +161,74 @@ namespace RAM
         {
             //取随机位置
             Random ran = new Random();
-            int command = ran.Next(319);
+            work_index = ran.Next(319);
+            
             //运行
             if(isFIFO)      //FIFO
             {
-                for (int i=0;i<320;i++ )
+                int command_index = work_index;
+                int command = worklist[command_index];
+                for (int i = 0; i < 320;i++ )
                 {
+                    if (command_index >= worklist.Count)
+                    {
+                        i--;
+                        command_index = next(command_index);
+                        continue;
+                    }
+                    command = worklist[command_index];
+                    worklist.RemoveAt(command_index);
                     current_miss = false;
                     int block = FIFO(command / 10);
                     memory[block].Page = command / 10;
-                    processList.Add(i, command, command / 10, current_miss, block);
-                    command = next(command);
-                    Thread.Sleep(500);
+                    AddProcess(i, command, command / 10, current_miss, block);
+                    command_index = next(command_index);
+                    sleep();
                 }
             }
             else            //LRU
             {
-                for(int i=0;i<320;i++)
-                {
-                    current_miss = false;
-                    int block = LRU(command / 10);
-                    memory[block].Page = command / 10;
-                    processList.Add(i, command, command / 10, current_miss, block);
-                    command = next(command);
-                    Thread.Sleep(500);
-                }
+                //for(int i=0;i<320;i++)
+                //{
+                //    int command = worklist[work_index];
+                //    worklist.RemoveAt(work_index);
+                //    current_miss = false;
+                //    int block = LRU(command / 10);
+                //    memory[block].Page = command / 10;
+                //    AddProcess(i, command, command / 10, current_miss, block);
+                //    command = next();
+                //    sleep();
+                //}
             }
+        }
+
+        void sleep()
+        {
+            if (skip) Thread.Sleep(10);
+            else Thread.Sleep(300);
+        }
+        public void clear()
+        {
+            missing = 0;
+            worklist.Clear();
+            for (int i = 0; i < 320; i++) worklist.Add(i);
+            processList.Clear();
+            FIFOList.Clear();
+            LRUList.Clear();
+            for (int i = 0; i < 4; i++) memory[i].Page = -1;
+            random = false;
+            direc = dir.mid;
+            Skip = false;
+        }
+        public void AddProcess(int i, int c, int p, bool m, int r)
+        {
+            ThreadPool.QueueUserWorkItem(delegate
+            {
+                parent.Dispatcher.Invoke(new Action(() =>
+                {
+                    processList.Add(i, c, p, m, r);
+                }), null);
+            });
         }
     }
 

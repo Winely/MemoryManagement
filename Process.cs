@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+using System.Collections.ObjectModel;
 
 namespace RAM
 {
@@ -13,6 +15,15 @@ namespace RAM
         int page;
         bool missing;
         int memory;
+        public int Index
+        {
+            get { return index; }
+        }
+
+        public int Command { get { return command; } }
+        public int Page { get { return page; } }
+        public bool Missing { get { return missing; } }
+        public int Memory { get { return memory; } }
         public Process(int i, int c, int p, bool m, int r)
         {
             index = i;
@@ -23,12 +34,12 @@ namespace RAM
         }
     }
 
-    class ProcessList : List<Process>
+    class ProcessList : ObservableCollection<Process>
     {
         public void Add(int i, int c, int p, bool m, int r)
         {
             Process process = new Process(i, c, p, m, r);
-            this.Add(process);
+            this.Add(process);            
         }
     }
 }

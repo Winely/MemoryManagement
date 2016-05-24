@@ -1,8 +1,9 @@
-﻿<Window x:Class="RAM.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="内存管理" Height="422.835" Width="769.776">
-    <Grid Margin="0,10,0,6" HorizontalAlignment="Left" Width="750">
+        xmlns:local="clr-namespace:RAM" x:Class="RAM.MainWindow"
+        Title="内存管理——1452764 何冬怡" Height="422.835" Width="822.776">
+    <Grid Margin="10,10,0,6" HorizontalAlignment="Left" Width="803">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="44*"/>
@@ -11,38 +12,34 @@
             <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="290"/>
             <ColumnDefinition Width="105"/>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="99"/>
+            <ColumnDefinition Width="108"/>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="datagrid" Margin="10,2,0,0" VerticalAlignment="Top" Height="365" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="226" Grid.RowSpan="4" Grid.Row="1">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="序号"/>
-                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="指令"/>
-                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="所在页"/>
-                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="是否缺页"/>
-                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="内存块"/>
-            </DataGrid.Columns>
-            <TabItem Content="？？？？？？？？？"/>
-        </DataGrid>
-        <Label Content="内存块" Grid.Column="1" HorizontalAlignment="Center" Height="46" Margin="12,42,9,0" VerticalAlignment="Top" Width="84" FontSize="24" Grid.Row="1"/>
-        <Label Content="页号" Grid.Column="1" HorizontalAlignment="Center" Height="45" Margin="24,0" VerticalAlignment="Top" Width="58" FontSize="24" RenderTransformOrigin="0.612,2.726" Grid.Row="2"/>
-        <Label Content="0" Grid.Column="2" HorizontalAlignment="Center" Height="46" Margin="35,42,35,0" VerticalAlignment="Bottom" Width="30" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="1"/>
-        <Label Content="1" Grid.Column="3" HorizontalAlignment="Center" Height="46" Margin="35,0" VerticalAlignment="Bottom" Width="30" FontSize="24" Grid.Row="1"/>
-        <Label Content="2" Grid.Column="4" HorizontalAlignment="Center" Height="46" Margin="35,0" VerticalAlignment="Bottom" Width="30" FontSize="24" Grid.Row="1"/>
-        <Label Content="3" Grid.Column="5" HorizontalAlignment="Center" Margin="35,0,34,0" Width="30" FontSize="24" Height="46" VerticalAlignment="Bottom" Grid.Row="1"/>
-        <Label x:Name="ram0" Content="-1" Grid.Column="2" HorizontalAlignment="Center" Height="36" Margin="29,0,29,10" VerticalAlignment="Center" Width="43" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
-        <Label x:Name="ram1" Content="" Grid.Column="3" HorizontalAlignment="Center" Height="36" Margin="29,0,29,10" VerticalAlignment="Center" Width="43" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
-        <Label x:Name="ram2" Content="-1" Grid.Column="4" HorizontalAlignment="Center" Height="36" Margin="29,0,29,10" VerticalAlignment="Center" Width="43" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
-        <Label x:Name="ram3" Content="-1" Grid.Column="5" HorizontalAlignment="Center" Height="36" Margin="35,0,35,10" VerticalAlignment="Center" Width="43" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
-        <Label Content="缺页数" Grid.Column="1" HorizontalAlignment="Center" Height="46" Margin="15,96,10,0" VerticalAlignment="Top" Width="81" FontSize="24" Grid.Row="3"/>
-        <Label x:Name="missing_page" Content="02" Grid.Column="2" HorizontalAlignment="Center" Height="46" Margin="10,96,10,0" VerticalAlignment="Center" Width="81" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="3"/>
+        <Label Content="内存块" Grid.Column="1" HorizontalAlignment="Center" Height="46" Margin="12,42,10,0" VerticalAlignment="Top" Width="84" FontSize="24" Grid.Row="1"/>
+        <Label Content="页号" Grid.Column="1" HorizontalAlignment="Center" Height="45" Margin="26,0,22,0" VerticalAlignment="Top" Width="58" FontSize="24" RenderTransformOrigin="0.612,2.726" Grid.Row="2"/>
+        <Label Content="0" Grid.Column="2" HorizontalAlignment="Center" Height="46" Margin="40,0,42,0" VerticalAlignment="Bottom" Width="30" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="1"/>
+        <Label Content="1" Grid.Column="3" HorizontalAlignment="Center" Height="46" Margin="30,0,31,0" VerticalAlignment="Bottom" Width="30" FontSize="24" Grid.Row="1"/>
+        <Label Content="2" Grid.Column="4" HorizontalAlignment="Center" Height="46" Margin="30,0,39,0" VerticalAlignment="Bottom" Width="30" FontSize="24" Grid.Row="1"/>
+        <Label Content="3" Grid.Column="5" HorizontalAlignment="Center" Margin="32,0,43,0" Width="30" FontSize="24" Height="46" VerticalAlignment="Bottom" Grid.Row="1"/>
+        <Label x:Name="ram0" Content="-1" Grid.Column="2" HorizontalAlignment="Center" Height="36" Margin="34,0,36,10" VerticalAlignment="Center" Width="42" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
+        <Label x:Name="ram1" Content="" Grid.Column="3" HorizontalAlignment="Center" Height="36" Margin="24,0,25,10" VerticalAlignment="Center" Width="42" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
+        <Label x:Name="ram2" Content="-1" Grid.Column="4" HorizontalAlignment="Center" Height="36" Margin="24,0,33,10" VerticalAlignment="Center" Width="42" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
+        <Label x:Name="ram3" Content="-1" Grid.Column="5" HorizontalAlignment="Center" Height="36" Margin="26,0,37,10" VerticalAlignment="Center" Width="42" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
+        <Label Content="缺页数" Grid.Column="1" HorizontalAlignment="Center" Height="46" Margin="18,96,8,0" VerticalAlignment="Top" Width="80" FontSize="24" Grid.Row="3"/>
+        <Label x:Name="missing_page" Content="02" Grid.Column="2" HorizontalAlignment="Center" Height="36" Margin="16,98,14,8" VerticalAlignment="Center" Width="82" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="3"/>
         <Button x:Name="fifo" Content="FIFO" Grid.Column="3" HorizontalAlignment="Left" Height="40" Margin="10,23,0,0" Grid.Row="4" VerticalAlignment="Top" Width="81" Click="runFIFO"/>
         <Button x:Name="lru" Content="LRU" Grid.Column="4" HorizontalAlignment="Left" Height="40" Margin="10,23,0,0" Grid.Row="4" VerticalAlignment="Top" Width="81" Click="runLRU"/>
-        <Button x:Name="skip" Content="快进" Grid.Column="2" HorizontalAlignment="Left" Height="40" Margin="10,23,0,0" Grid.Row="4" VerticalAlignment="Top" Width="81"/>
+        <Button x:Name="skiping" Content="快进" Grid.Column="2" HorizontalAlignment="Left" Height="40" Margin="10,23,0,0" Grid.Row="4" VerticalAlignment="Top" Width="81" Click="skip"/>
+        <Button x:Name="clear" Content="复位" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="12,23,0,0" Grid.Row="4" VerticalAlignment="Top" Width="81" Click="Clear"/>
+        <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Height="366" Margin="1,0,0,0" Grid.RowSpan="5" VerticalAlignment="Top" Width="290" IsSynchronizedWithCurrentItem="False" AutoGenerateColumns="True" ItemsSource="{Binding /}" Grid.ColumnSpan="2">
+            <DataGrid.DataContext>
+                <local:ProcessList/>
+            </DataGrid.DataContext>
+        </DataGrid>
 
     </Grid>
 </Window>
