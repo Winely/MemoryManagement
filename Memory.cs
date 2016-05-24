@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace RAM
 {
-    class Memory:INotifyPropertyChanged
+    class Memory : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         int page = -1;
@@ -19,7 +19,7 @@ namespace RAM
                 page = value;
                 if (this.PropertyChanged != null)
                 {
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("page"));
+                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Page"));
                 }
             }
         }

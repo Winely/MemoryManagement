@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Threading;
 
 namespace RAM
 {
@@ -12,10 +13,10 @@ namespace RAM
         public event PropertyChangedEventHandler PropertyChanged;
         int missing = 0;
         bool[] worklist = new bool[320];
-        ProcessList processList;
-        Memory[] memory = new Memory[4];
-        LinkedList<int> FIFOList;
-        LinkedList<int> LRUList;
+        ProcessList processList = new ProcessList();
+        public Memory[] memory = new Memory[4];
+        LinkedList<int> FIFOList = new LinkedList<int>();
+        LinkedList<int> LRUList = new LinkedList<int>();
         bool random = false;
         bool front = true;
         bool isFIFO;
@@ -25,15 +26,26 @@ namespace RAM
         {
             //可能要改
             for (int i = 0; i < 320; i++) worklist[i] = true;
+            for (int i = 0; i < 4; i++) memory[i] = new Memory();
         }
 
+        public bool IsFIFO
+        {
+            get { return isFIFO; }
+            set { isFIFO = value; }
+        }
+        public Memory[] RAMs
+        {
+            get { return memory; }
+        }
         public int Missing
         {
             get { return missing; }
-            set { missing = value;
+            set { 
+                missing = value;
                 if (this.PropertyChanged != null)
                 {
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("missing"));
+                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Missing"));
                 }
             }
         }
@@ -122,11 +134,12 @@ namespace RAM
             random = !random;
             return n;
         }
-        //?????
         public void run()
         {
+            //取随机位置
             Random ran = new Random();
             int command = ran.Next(319);
+            //运行
             if(isFIFO)      //FIFO
             {
                 for (int i=0;i<320;i++ )
@@ -136,6 +149,7 @@ namespace RAM
                     memory[block].Page = command / 10;
                     processList.Add(i, command, command / 10, current_miss, block);
                     command = next(command);
+                    Thread.Sleep(500);
                 }
             }
             else            //LRU
@@ -147,6 +161,7 @@ namespace RAM
                     memory[block].Page = command / 10;
                     processList.Add(i, command, command / 10, current_miss, block);
                     command = next(command);
+                    Thread.Sleep(500);
                 }
             }
         }

@@ -28,20 +28,20 @@
             </DataGrid.Columns>
             <TabItem Content="？？？？？？？？？"/>
         </DataGrid>
-        <Label Content="内存块" Grid.Column="1" HorizontalAlignment="Center" Height="46" Margin="12,55,10,0" VerticalAlignment="Top" Width="84" FontSize="24" Grid.Row="1"/>
+        <Label Content="内存块" Grid.Column="1" HorizontalAlignment="Center" Height="46" Margin="12,42,9,0" VerticalAlignment="Top" Width="84" FontSize="24" Grid.Row="1"/>
         <Label Content="页号" Grid.Column="1" HorizontalAlignment="Center" Height="45" Margin="24,0" VerticalAlignment="Top" Width="58" FontSize="24" RenderTransformOrigin="0.612,2.726" Grid.Row="2"/>
-        <Label Content="0" Grid.Column="2" HorizontalAlignment="Center" Height="46" Margin="38,54,33,1" VerticalAlignment="Center" Width="30" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="1"/>
-        <Label Content="1" Grid.Column="3" HorizontalAlignment="Center" Height="46" Margin="37,0,34,0" VerticalAlignment="Bottom" Width="30" FontSize="24" Grid.Row="1"/>
-        <Label Content="2" Grid.Column="4" HorizontalAlignment="Center" Height="46" Margin="42,0,29,0" VerticalAlignment="Bottom" Width="30" FontSize="24" Grid.Row="1"/>
-        <Label Content="3" Grid.Column="5" HorizontalAlignment="Center" Margin="41,0,29,1" Width="30" FontSize="24" Height="46" VerticalAlignment="Bottom" Grid.Row="1"/>
-        <Label x:Name="ram0" Content="" Grid.Column="2" HorizontalAlignment="Center" Height="36" Margin="28,0,30,10" VerticalAlignment="Center" Width="43" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
-        <Label x:Name="ram1" Content="" Grid.Column="3" HorizontalAlignment="Center" Height="36" Margin="30,0,28,10" VerticalAlignment="Bottom" Width="43" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
-        <Label x:Name="ram2" Content="" Grid.Column="4" HorizontalAlignment="Center" Height="36" Margin="35,0,23,10" VerticalAlignment="Center" Width="43" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
-        <Label x:Name="ram3" Content="" Grid.Column="5" HorizontalAlignment="Center" Height="36" Margin="34,0,23,10" VerticalAlignment="Center" Width="43" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
+        <Label Content="0" Grid.Column="2" HorizontalAlignment="Center" Height="46" Margin="35,42,35,0" VerticalAlignment="Bottom" Width="30" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="1"/>
+        <Label Content="1" Grid.Column="3" HorizontalAlignment="Center" Height="46" Margin="35,0" VerticalAlignment="Bottom" Width="30" FontSize="24" Grid.Row="1"/>
+        <Label Content="2" Grid.Column="4" HorizontalAlignment="Center" Height="46" Margin="35,0" VerticalAlignment="Bottom" Width="30" FontSize="24" Grid.Row="1"/>
+        <Label Content="3" Grid.Column="5" HorizontalAlignment="Center" Margin="35,0,34,0" Width="30" FontSize="24" Height="46" VerticalAlignment="Bottom" Grid.Row="1"/>
+        <Label x:Name="ram0" Content="-1" Grid.Column="2" HorizontalAlignment="Center" Height="36" Margin="29,0,29,10" VerticalAlignment="Center" Width="43" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
+        <Label x:Name="ram1" Content="" Grid.Column="3" HorizontalAlignment="Center" Height="36" Margin="29,0,29,10" VerticalAlignment="Center" Width="43" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
+        <Label x:Name="ram2" Content="-1" Grid.Column="4" HorizontalAlignment="Center" Height="36" Margin="29,0,29,10" VerticalAlignment="Center" Width="43" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
+        <Label x:Name="ram3" Content="-1" Grid.Column="5" HorizontalAlignment="Center" Height="36" Margin="35,0,35,10" VerticalAlignment="Center" Width="43" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
         <Label Content="缺页数" Grid.Column="1" HorizontalAlignment="Center" Height="46" Margin="15,96,10,0" VerticalAlignment="Top" Width="81" FontSize="24" Grid.Row="3"/>
-        <Label Content="02" Grid.Column="2" HorizontalAlignment="Center" Height="46" Margin="10,96,10,0" VerticalAlignment="Center" Width="81" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="3"/>
-        <Button x:Name="fifo" Content="FIFO" Grid.Column="3" HorizontalAlignment="Left" Height="40" Margin="10,23,0,0" Grid.Row="4" VerticalAlignment="Top" Width="81"/>
-        <Button x:Name="lru" Content="LRU" Grid.Column="4" HorizontalAlignment="Left" Height="40" Margin="10,23,0,0" Grid.Row="4" VerticalAlignment="Top" Width="81"/>
+        <Label x:Name="missing_page" Content="02" Grid.Column="2" HorizontalAlignment="Center" Height="46" Margin="10,96,10,0" VerticalAlignment="Center" Width="81" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="3"/>
+        <Button x:Name="fifo" Content="FIFO" Grid.Column="3" HorizontalAlignment="Left" Height="40" Margin="10,23,0,0" Grid.Row="4" VerticalAlignment="Top" Width="81" Click="runFIFO"/>
+        <Button x:Name="lru" Content="LRU" Grid.Column="4" HorizontalAlignment="Left" Height="40" Margin="10,23,0,0" Grid.Row="4" VerticalAlignment="Top" Width="81" Click="runLRU"/>
         <Button x:Name="skip" Content="快进" Grid.Column="2" HorizontalAlignment="Left" Height="40" Margin="10,23,0,0" Grid.Row="4" VerticalAlignment="Top" Width="81"/>
 
     </Grid>
