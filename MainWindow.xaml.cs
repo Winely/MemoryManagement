@@ -86,12 +86,14 @@ namespace RAM
         //按钮事件
         private void runFIFO(object sender, RoutedEventArgs e)
         {
+            manager.stop = false;
             manager.IsFIFO = true;
             bgworker.RunWorkerAsync();
             setBTN(false);
         }
         private void runLRU(object sender, RoutedEventArgs e)
         {
+            manager.stop = false;
             manager.IsFIFO = false;
             bgworker.RunWorkerAsync();
             setBTN(false);

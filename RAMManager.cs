@@ -20,6 +20,7 @@ namespace RAM
         LinkedList<int> LRUList = new LinkedList<int>();
         bool random = false;
         dir direc = dir.front;
+        public bool stop { get; set; }
         bool isFIFO;
         bool current_miss;
         bool skip = false;
@@ -27,7 +28,7 @@ namespace RAM
         public MainWindow parent;
         public RAMManager()
         {
-            //可能要改
+            stop = true;
             for (int i = 0; i < 320; i++) worklist.Add(i);
             for (int i = 0; i < 4; i++) memory[i] = new Memory();
         }
@@ -123,7 +124,7 @@ namespace RAM
 
         int next(int command_index)
         {
-            if (processList.Count == 320) return 322;
+            if (processList.Count == 320 || worklist.Count==0) return 322;
             Random ran = new Random();
             int n=command_index;
             if(random)
@@ -170,10 +171,13 @@ namespace RAM
                 int command = worklist[command_index];
                 for (int i = 0; i < 320;i++ )
                 {
-                    if (command_index >= worklist.Count)
+                    if (stop) return;
+                    if (command_index == 322) return;//一个记号
+                    if (command_index >= worklist.Count || command_index<0)
                     {
                         i--;
                         command_index = next(command_index);
+                        if (processList.Count == 320) return;
                         continue;
                     }
                     command = worklist[command_index];
@@ -188,17 +192,27 @@ namespace RAM
             }
             else            //LRU
             {
-                //for(int i=0;i<320;i++)
-                //{
-                //    int command = worklist[work_index];
-                //    worklist.RemoveAt(work_index);
-                //    current_miss = false;
-                //    int block = LRU(command / 10);
-                //    memory[block].Page = command / 10;
-                //    AddProcess(i, command, command / 10, current_miss, block);
-                //    command = next();
-                //    sleep();
-                //}
+                int command_index = work_index;
+                int command = worklist[command_index];
+                for (int i = 0; i < 320; i++)
+                {
+                    if (stop) return;
+                    if (command_index >= worklist.Count||command_index<0)
+                    {
+                        i--;
+                        command_index = next(command_index);
+                        if (processList.Count == 320) return;
+                        continue;
+                    }
+                    command = worklist[command_index];
+                    worklist.RemoveAt(command_index);
+                    current_miss = false;
+                    int block = LRU(command / 10);
+                    memory[block].Page = command / 10;
+                    AddProcess(i, command, command / 10, current_miss, block);
+                    command_index = next(command_index);
+                    sleep();
+                }
             }
         }
 
@@ -209,6 +223,7 @@ namespace RAM
         }
         public void clear()
         {
+            stop = true;
             missing = 0;
             worklist.Clear();
             for (int i = 0; i < 320; i++) worklist.Add(i);
@@ -227,6 +242,7 @@ namespace RAM
                 parent.Dispatcher.Invoke(new Action(() =>
                 {
                     processList.Add(i, c, p, m, r);
+                    parent.dataGrid.ScrollIntoView(processList.Last());
                 }), null);
             });
         }
