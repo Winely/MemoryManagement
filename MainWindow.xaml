@@ -29,7 +29,7 @@
         <Label x:Name="ram1" Content="" Grid.Column="3" HorizontalAlignment="Center" Height="36" Margin="24,0,25,10" VerticalAlignment="Center" Width="42" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
         <Label x:Name="ram2" Content="-1" Grid.Column="4" HorizontalAlignment="Center" Height="36" Margin="24,0,33,10" VerticalAlignment="Center" Width="42" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
         <Label x:Name="ram3" Content="-1" Grid.Column="5" HorizontalAlignment="Center" Height="36" Margin="26,0,37,10" VerticalAlignment="Center" Width="42" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="2"/>
-        <Label Content="缺页数" Grid.Column="1" HorizontalAlignment="Center" Height="46" Margin="18,96,8,0" VerticalAlignment="Top" Width="80" FontSize="24" Grid.Row="3"/>
+        <Label Content="缺页数" Grid.Column="1" HorizontalAlignment="Center" Height="46" Margin="15,96,0,0" VerticalAlignment="Top" Width="90" FontSize="24" Grid.Row="3"/>
         <Label x:Name="missing_page" Content="02" Grid.Column="2" HorizontalAlignment="Center" Height="36" Margin="16,98,14,8" VerticalAlignment="Center" Width="82" FontSize="24" RenderTransformOrigin="-0.478,0.406" Grid.Row="3"/>
         <Button x:Name="fifo" Content="FIFO" Grid.Column="3" HorizontalAlignment="Left" Height="40" Margin="10,23,0,0" Grid.Row="4" VerticalAlignment="Top" Width="81" Click="runFIFO"/>
         <Button x:Name="lru" Content="LRU" Grid.Column="4" HorizontalAlignment="Left" Height="40" Margin="10,23,0,0" Grid.Row="4" VerticalAlignment="Top" Width="81" Click="runLRU"/>
